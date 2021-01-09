@@ -59,9 +59,43 @@ It will bundle the application in production mode and optimize the build for the
 The JS code is minified and the filenames include hashes to allow proper cache invalidation.
 
 
-## Architecture
+## Possible Improvements
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In it's current state it is not ready for production. Some areas that could be improved are outlined below.
 
+### Separation of layout and logic
+In it's current state the app's components does not cleanly separate logic and layout. 
+When adding the next features, it would make sense to look for repetitions, especially in terms of styles applied and extract pure layout components whereever it makes sense.
+
+### Error handling
+
+Right now network errors are just silently handled, but the user is not informed about them.
+To give better feedback, a error display or notifications should be added to show that the API calls are failing and no data will be shown.
+
+### Loading indicator
+
+When the app starts fetching data from the Carbon Interface API, it should display an indicator that currently data is being loaded. This would improve the user experience because it is clearer that the submission was successful.
+
+### Allow for a more convenient way to restart the process
+
+When the user has started entering some data, she is not allowed to change the location any more.
+To do so, the whole page needs to be reloaded. 
+For convenience it would be nice to have a button that restarts the whole process.
+
+### Nicer Design
+
+A designer should definitely have a look at the app and propose some improvements to make it look nicer.
+Material UI themes would allow  e.g. to change the color scheme easily.
+
+
+### Mobile Friendlyness
+
+The current layout does not fully work on really small screens. This should be tested further and improved - Material UI's Grid layout should support proper mobile layouts.
+
+
+### Modular CSS
+
+Right now there is only a handfull of custom styles used, but as soon as the `App.css` file starts growing, it would make sense to add CSS files per component, ideally using something like SCSS modules to keep all styles restricted to the scope of one component.
 
 
