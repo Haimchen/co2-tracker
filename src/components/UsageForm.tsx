@@ -12,10 +12,16 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
 
     const energyInput = useRef<HTMLInputElement>(null);
 
+    const dataIsComplete = () => location && date && energyConsumption >= 0;
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         event.stopPropagation();
 
+        if (!dataIsComplete()) {
+            return;
+        }
+        
         onSubmit({ location, date, energyConsumption})
 
         // automatically select the next day
@@ -76,8 +82,9 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
                     </Grid> 
                         <Grid item>
                             <FormControl>
-                                <InputLabel>{ date ? `Energy usage on ${date}` : "Energy usage"}</InputLabel>    
+                                <InputLabel htmlFor="energy">{ date ? `Energy usage on ${date}` : "Energy usage"}</InputLabel>    
                                 <Input
+                                    id="energy"
                                     placeholder="your energy consumption"
                                     type="number"
                                     required
