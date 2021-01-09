@@ -12,7 +12,18 @@ yarn install
 
 Running the app also requires a valid API Key for [Carboninterface](https://www.carboninterface.com). To receive a free key, you need to [sign up](https://www.carboninterface.com/users/sign_up) and retrieve your personal key.
 
-**TODO** How to set the key?
+There are two ways to set the key in development mode:
+
+You can either create a `.env` file in the root of the project with the following content (where <your key> should be replaced with your carbon interface API key):
+```
+REACT_APP_CI_API_KEY=<your key>
+```
+Alternatively you can export the key as a local environment variable by running:
+```
+export REACT_APP_CI_API_KEY=<your key>
+```
+This will make the API key available in your console during the current session, but you will need to do it again when you start a new session.
+
 
 To start the app in development mode with hot reloading run:
 ```
@@ -51,4 +62,6 @@ The JS code is minified and the filenames include hashes to allow proper cache i
 ## Architecture
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
 

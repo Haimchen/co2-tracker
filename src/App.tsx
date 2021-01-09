@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { Grid } from '@material-ui/core';
+
 import './App.css';
 import UsageForm from './components/UsageForm';
 import EmissionsChart from './components/EmissionsChart';
+import fetchEmissionData from './api/fetchEmissionData';
 
 
 export type InputData = {
@@ -14,46 +17,27 @@ type DataEntry = InputData & {
   carbonEmission: number, 
 }
 
-type EmissionData = {
+export type EmissionData = {
   carbon_kg: number,
-}
-
-const fetchEmissionData = async (inputData: InputData): Promise<EmissionData | {}> => {
-  try {
-    const input = {
-      type: "electricity",
-      electricity_unit: "mwh",
-      electricity_value: Number(inputData.energyConsumption),
-      country: inputData.location,
-    }
-
-    const { data  = {} } = await fetch("https://www.carboninterface.com/api/v1/estimates", {
-      method: "POST",
-      body: JSON.stringify(input),
-      headers: {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${process.env.REACT_APP_CI_API_KEY}`,
-      }
-    }).then(response => response.json());
-
-    const { attributes: emissionData } = data;
-    return emissionData;
-
-  } catch (err) {
-    console.log(err)
-    return {}
-  }
 }
 
 function App() {
   const [data, setData] = useState<DataEntry[]>([]);
 
   const addEntry = (entry: DataEntry) => {
-    console.log('new entry:', entry);
+    const newData = [...data]
 
-    // TODO make sure data is sorted?
-    // TODO make sure entries are unique by date?
-    const newData = [...data, entry]
+    // if there is already an entry for the same date, replace it
+    const index = newData.findIndex(item => item.date == entry.date)
+    if (index >= 0) {
+      newData[index] = entry
+    } else {
+      newData.push(entry)
+    }
+
+    // make sure array is sorted by date
+    newData.sort((a, b) => parseInt(a.date) - parseInt(b.date))
+
     setData(newData);
   }
 
@@ -69,10 +53,16 @@ function App() {
         <p>Track the carbon emissions caused by your electricity usage</p>
       </header>
       <section>
-        <UsageForm onSubmit={handleNewData}/>
-        {data.length > 0 && (
-          <EmissionsChart data={data}/>
-        )}
+        <Grid container alignItems="center" justify="center" direction="column">
+          <Grid item>
+            <UsageForm onSubmit={handleNewData}/>
+          </Grid>
+          {data.length > 0 && (
+            <Grid item>
+              <EmissionsChart data={data}/>
+            </Grid>
+          )}
+        </Grid>
       </section>
     </div>
   );

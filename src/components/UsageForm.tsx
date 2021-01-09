@@ -16,6 +16,8 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
         event.preventDefault();
         event.stopPropagation();
 
+        onSubmit({ location, date, energyConsumption})
+
         // automatically select the next day
         // TODO improve API of the handler
         const nextDate = format(addDays(new Date(date), 1), 'yyyy-MM-dd');
@@ -27,8 +29,6 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
         if (energyInput && energyInput.current){
             energyInput.current.focus();
         }
-
-        onSubmit({ location, date, energyConsumption})
     }
 
     const blockLocationChange = !!date;
