@@ -34,58 +34,68 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
     const blockLocationChange = !!date;
 
     return (
-        <Grid container alignItems="center" justify="center" direction="column">
-            <Typography>How much energy have you used over the last week? Enter the value for each day and see how much carbon emissions you have caused </Typography>
-            <Grid item>
-            <FormControl>
-                <InputLabel id="location-select-label">Location</InputLabel>
-                <Select
-                    disabled={blockLocationChange}
-                    labelId="location-select-label"
-                    value={location}
-                    onChange={handleLocationChange}
-                    autoWidth
-                >
-                    <MenuItem value="" disabled>Select your country</MenuItem>
-                    <MenuItem value={'us'}>USA</MenuItem>
-                    <MenuItem value={'ca'}>Canada</MenuItem>
-                </Select>
-                <FormHelperText>{blockLocationChange ? "You can't change the location during data entry. You need to start over with another location" : "Select your country to get more precise emission data"}</FormHelperText>
-            </FormControl>
-            </Grid>
-            <Grid item>
-            <TextField
-                id="date"
-                label="Date"
-                type="date" 
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                onChange={handleDateChange}
-                required
-                placeholder="Select a date"
-                value={date}
-                helperText={date ? "Next date will be automatically selected" : "Pick a date at least one week in the past"}
-            />
-            </Grid>
-            <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
+            <Grid container alignItems="center" justify="center" direction="column" className="UsageForm-container">
                 <Grid item>
-                <FormControl>
-                    <InputLabel>{ date ? `Energy usage on ${date}` : "Energy usage"}</InputLabel>    
-                    <Input
-                        placeholder="Enter your energy consumption in mwh"
-                        type="number"
-                        required
-                        value={energyConsumption}
-                        onChange={handleEnergyConsumptionChange}
-                        inputProps={{ min: 0, step: 0.0001 }}
-                        ref={energyInput}
-                        />
-                </FormControl>
+                    <Typography variant="h5">How much energy have you used over the last week? </Typography>
+                    <Typography variant="subtitle2" gutterBottom>Enter the value for each day and see how much carbon emissions you have caused </Typography>
                 </Grid>
-                <Button type="submit">Submit</Button>
-            </form>      
-        </Grid>
+                <Grid item>
+                    <FormControl>
+                        <InputLabel id="location-select-label">Location</InputLabel>
+                        <Select
+                            disabled={blockLocationChange}
+                            labelId="location-select-label"
+                            value={location}
+                            onChange={handleLocationChange}
+                            autoWidth
+                            required
+                        >
+                            <MenuItem value="" disabled>Select your country</MenuItem>
+                            <MenuItem value={'us'}>USA</MenuItem>
+                            <MenuItem value={'ca'}>Canada</MenuItem>
+                        </Select>
+                        <FormHelperText>{blockLocationChange ? "You can't change the location during data entry." : "Select your country to get more precise emission data"}</FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item container direction="row" alignItems="center" spacing={2}>
+                    <Grid item>
+                        <TextField
+                            id="date"
+                            label="Date"
+                            type="date" 
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={handleDateChange}
+                            required
+                            placeholder="Select a date"
+                            value={date}
+                            helperText={date ? "Next date will be automatically selected" : "Pick a date at least one week in the past"}
+                        />
+                    </Grid> 
+                        <Grid item>
+                            <FormControl>
+                                <InputLabel>{ date ? `Energy usage on ${date}` : "Energy usage"}</InputLabel>    
+                                <Input
+                                    placeholder="your energy consumption"
+                                    type="number"
+                                    required
+                                    value={energyConsumption}
+                                    onChange={handleEnergyConsumptionChange}
+                                    inputProps={{ min: 0, step: 0.0001 }}
+                                    ref={energyInput}
+                                    fullWidth
+                                    />
+                                <FormHelperText>Enter your energy consumption per day in mwh</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                        <Grid item>
+                            <Button type="submit" variant="contained" color="primary">Submit</Button>
+                        </Grid>
+                </Grid>   
+            </Grid>
+        </form> 
     )
 }
 

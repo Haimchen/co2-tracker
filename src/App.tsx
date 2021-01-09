@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import './App.css';
 import UsageForm from './components/UsageForm';
 import EmissionsChart from './components/EmissionsChart';
+import HeaderBar from './components/HeaderBar';
 import fetchEmissionData from './api/fetchEmissionData';
 
 
@@ -13,7 +14,7 @@ export type InputData = {
   location: string,
 }
 
-type DataEntry = InputData & {
+export type DataEntry = InputData & {
   carbonEmission: number, 
 }
 
@@ -48,11 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>C0<sub>2</sub> Tracker</h1>
-        <p>Track the carbon emissions caused by your electricity usage</p>
-      </header>
-      <section>
+      <HeaderBar />
         <Grid container alignItems="center" justify="center" direction="column">
           <Grid item>
             <UsageForm onSubmit={handleNewData}/>
@@ -63,7 +60,6 @@ function App() {
             </Grid>
           )}
         </Grid>
-      </section>
     </div>
   );
 }
