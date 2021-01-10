@@ -12,7 +12,7 @@ const UsageForm = ({ onSubmit }: { onSubmit: (input: InputData) => void}) => {
 
     const energyInput = useRef<HTMLInputElement>(null);
 
-    const dataIsComplete = () => location && date && energyConsumption >= 0;
+    const dataIsComplete = () => location && date && Number(energyConsumption) >= 0;
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
