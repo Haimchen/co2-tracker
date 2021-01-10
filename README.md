@@ -17,15 +17,19 @@ There are two ways to set the key in development mode:
 You can either create a `.env` file in the root of the project with the following content (where <your key> should be replaced with your carbon interface API key):
 ```
 REACT_APP_CI_API_KEY=<your key>
-```
+```
+
 Alternatively you can export the key as a local environment variable by running:
+
 ```
 export REACT_APP_CI_API_KEY=<your key>
 ```
+
 This will make the API key available in your console during the current session, but you will need to do it again when you start a new session.
 
 
 To start the app in development mode with hot reloading run:
+
 ```
 yarn start
 ```
@@ -42,6 +46,7 @@ yarn test
 ```
 
 To just run all tests once (e.g. in a CI pipeline) you can use this command:
+
 ```
 CI=true yarn test
 ```
